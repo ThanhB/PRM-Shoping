@@ -1,11 +1,25 @@
-import React, { useContext, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import React, { useCallback, useContext, useState } from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 const AuthForm = ({ errorMessage, onSubmit, submitButtonText }) => {
   const { state } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useFocusEffect(
+    useCallback(() => {
+      setEmail("");
+      setPassword("");
+    }, [])
+  );
 
   return (
     <>
