@@ -25,7 +25,7 @@ function ShopMapScreen() {
         <Text>Address: Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh </Text>
         <Text>Open Hours: 8:00 AM - 5:00 PM</Text>
         <Text>Phone: 0123456789</Text>
-        <Text>Email: thanhbtse161127@fpt.edu.vn</Text>
+        <Text>Email: abcxyz@fpt.vn</Text>
       </View>
     </View>
   );
