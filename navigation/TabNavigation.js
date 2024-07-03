@@ -1,6 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
-import { CheckoutStack, HomeStack, ProfileStack } from "./StackNavigation";
+import {
+  CheckoutStack,
+  HomeStack,
+  MapStack,
+  ProfileStack,
+} from "./StackNavigation";
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
@@ -41,6 +46,17 @@ const TabNavigation = () => {
           headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <MaterialIcons name="person" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Map"
+        component={MapStack}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons name="share-location" size={size} color={color} />
           ),
         }}
       />

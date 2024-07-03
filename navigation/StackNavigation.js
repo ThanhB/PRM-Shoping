@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-
+import ShopMapScreen from '../screens/MapScreen';
 const Stack = createStackNavigator();
 
 
@@ -44,5 +44,13 @@ const ProfileStack = () => {
     )
 }
   
+//Stack này chứa màn hình địa chỉ của shop
+const MapStack = () => {
+  return (
+    <Stack.Navigator>
+        <Stack.Screen name="location" component={ShopMapScreen} options={{ headerShown: false }} />
+    </Stack.Navigator>
+  )
+}
 
-export {HomeStack, AuthStack, CheckoutStack, ProfileStack} 
+export {HomeStack, AuthStack, CheckoutStack, ProfileStack, MapStack} 
