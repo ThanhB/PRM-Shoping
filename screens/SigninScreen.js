@@ -14,7 +14,7 @@ const SigninScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-green-400 justify-center pt-10">
       <AuthForm
         headerText="Sign In to Your Account"
         errorMessage={state.errorMessage}

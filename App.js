@@ -6,6 +6,7 @@ import ResolveAuthScreen from "./screens/ResolveAuthScreen";
 import { Provider as AuthProvider } from "./context/AuthContext";
 import AuthNavigation from "./navigation/AuthNavigation";
 import { createStackNavigator } from "@react-navigation/stack";
+import "./styles.css";
 
 const Stack = createStackNavigator();
 

@@ -64,7 +64,7 @@ const signup =
 const signin =
   (dispatch) =>
   async ({ email, password }) => {
-    console.log(email, password);
+    // console.log(email, password);
     try {
       const response = await apiInstance.post("/auth/login", {
         email,
