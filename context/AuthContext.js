@@ -6,13 +6,16 @@ import { errorParser } from "../api/error";
 
 const authReducer = (state, action) => {
   switch (action.type) {
+    case "loading":
+      return { ...state, loading: true };
     case "add_error":
-      return { ...state, errorMessage: action.payload };
+      return { ...state, errorMessage: action.payload, loading: false };
     case "signin":
       return {
         errorMessage: "",
         token: action.payload.access_token,
         user: action.payload.user,
+        loading: false,
       };
     case "clear_error_message":
       return { ...state, errorMessage: "" };
@@ -41,6 +44,7 @@ const signup =
   (dispatch) =>
   async ({ email, password }) => {
     try {
+      dispatch({ type: "loading" });
       await apiInstance.post("/auth/register", { email, password });
 
       const response = await apiInstance.post("/auth/login", {
@@ -66,6 +70,7 @@ const signin =
   async ({ email, password }) => {
     // console.log(email, password);
     try {
+      dispatch({ type: "loading" });
       const response = await apiInstance.post("/auth/login", {
         email,
         password,
@@ -91,5 +96,5 @@ const signout = (dispatch) => async () => {
 export const { Provider, Context } = createDataContext(
   authReducer,
   { signin, signout, signup, clearErrorMessage, tryLocalSignin },
-  { token: null, errorMessage: "", user: null }
+  { token: null, errorMessage: "", user: null, loading: false }
 );
