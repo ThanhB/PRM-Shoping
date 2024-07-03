@@ -13,6 +13,7 @@ function ShopMapScreen() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
+        // provider="google"
       >
         <Marker
           coordinate={{ latitude: 10.841264574875142, longitude: 106.80978643671563 }}
