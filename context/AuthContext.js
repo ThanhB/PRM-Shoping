@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import createDataContext from "./createDataContext";
 import apiInstance from "../api";
-import { navigate } from "../navigationRef";
+import { navigateToAuth, navigateToMain } from "../navigationRef";
 import { errorParser } from "../api/error";
 
 const authReducer = (state, action) => {
@@ -27,9 +27,9 @@ const tryLocalSignin = (dispatch) => async () => {
   const token = await AsyncStorage.getItem("token");
   if (token) {
     dispatch({ type: "signin", payload: token });
-    navigate("Main", { screen: "Home" });
+    navigateToMain();
   } else {
-    navigate("Auth", { screen: "Signin" });
+    navigateToAuth();
   }
 };
 
@@ -51,7 +51,7 @@ const signup =
       await AsyncStorage.setItem("token", response.data.data.access_token);
       dispatch({ type: "signin", payload: response.data.data });
 
-      navigate("Main", { screen: "Home" });
+      navigateToMain();
     } catch (err) {
       console.error(err);
       dispatch({
@@ -72,7 +72,7 @@ const signin =
       });
       await AsyncStorage.setItem("token", response.data.data.access_token);
       dispatch({ type: "signin", payload: response.data.data });
-      navigate("Main", { screen: "Home" });
+      navigateToMain();
     } catch (err) {
       console.error(err);
       dispatch({
@@ -85,7 +85,7 @@ const signin =
 const signout = (dispatch) => async () => {
   await AsyncStorage.removeItem("token");
   dispatch({ type: "signout" });
-  navigate("Auth");
+  navigateToAuth();
 };
 
 export const { Provider, Context } = createDataContext(
