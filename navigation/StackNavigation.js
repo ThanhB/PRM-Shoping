@@ -4,6 +4,10 @@ import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ShopMapScreen from '../screens/MapScreen';
+import OrderListScreen from '../screens/OrderListScreen';
+import AccountDetail from '../screens/AccountDetail';
+import OrderDetail from '../screens/OderDetail';
+
 const Stack = createStackNavigator();
 
 
@@ -39,7 +43,10 @@ const AuthStack = () => {
 const ProfileStack = () => {
     return (
       <Stack.Navigator>
-          <Stack.Screen name="profile" component={ProfileScreen} />
+          <Stack.Screen name="profile" component={ProfileScreen}  options={{ headerShown: false, headerTitle: '' }}  />
+          <Stack.Screen name="orderList" component={OrderListScreen} options={{ headerTitle: '' }}/>
+          <Stack.Screen name="Order Detail" component={OrderDetail} />
+          <Stack.Screen name="accountDetail" component={AccountDetail} options={{ headerTitle: '' }}/>
       </Stack.Navigator>
     )
 }
