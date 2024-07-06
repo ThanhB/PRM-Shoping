@@ -16,7 +16,7 @@ export default function App() {
       <SafeAreaProvider>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="resolveAuth"
               component={ResolveAuthScreen}
               options={{ headerShown: false }}
@@ -27,7 +27,7 @@ export default function App() {
               options={{
                 headerShown: false,
               }}
-            />
+            /> */}
             <Stack.Screen
               component={TabNavigation}
               name="Main"
