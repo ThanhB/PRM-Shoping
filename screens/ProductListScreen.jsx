@@ -90,7 +90,7 @@ const ProductListScreen = ({ navigation }) => {
           contentContainerStyle={styles.flatListContainer}
           columnWrapperStyle={styles.row}
           renderItem={({ item }) => (
-            <ProductCard data={item} key={item.id} />
+            <ProductCard item={item} key={item.id} />
             // <TouchableOpacity
             //   onPress={() =>
             //     navigation.navigate("ProductDetail", { productTypeId: item._id })
