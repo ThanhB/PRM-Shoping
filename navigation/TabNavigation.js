@@ -3,6 +3,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import {
   CheckoutStack,
   HomeStack,
+  ProductStack,
   MapStack,
   ProfileStack,
 } from "./StackNavigation";
@@ -24,6 +25,16 @@ const TabNavigation = () => {
           headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <MaterialIcons name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Products"
+        component={ProductStack}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons name="store" size={size} color={color} />
           ),
         }}
       />
