@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   TextInput,
   StyleSheet,
-  ScrollView,
 } from "react-native";
 import apiInstance from "../api";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -16,31 +15,35 @@ import ProductCard from "../components/ProductCard";
 
 const ProductListScreen = ({ navigation }) => {
   const [numColumns, setNumColumns] = useState(2);
-  const [text, setText] = useState("");
-  const [productTypes, setProductTypes] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const url = `/products/public/?limit=10&page=1&order=created%20asc&search=${search}&productType=${selectedCategory}`;
+      console.log("API URL:", url);
+      const response = await apiInstance.get(url);
+      console.log("API Response:", response.data);
+      setProducts(response.data.data.products);
+    } catch (error) {
+      setError("Failed to load products");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchProductTypes = async () => {
-      try {
-        const response = await apiInstance.get(
-          "/product-types?limit=10&page=1&order=created%20asc"
-        );
-        setProductTypes(response.data.data.productTypes);
-      } catch (error) {
-        setError("Failed to load product types");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProductTypes();
-  }, []);
+    fetchProducts();
+  }, [search, selectedCategory]);
 
   if (loading) {
     return (
-      <View>
+      <View style={styles.centered}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
@@ -48,61 +51,89 @@ const ProductListScreen = ({ navigation }) => {
 
   if (error) {
     return (
-      <View>
+      <View style={styles.centered}>
         <Text>{error}</Text>
       </View>
     );
   }
 
   return (
-    <View className="bg-white h-screen py-3">
+    <View style={styles.container}>
       {/* Searchbar */}
-      <View className="flex flex-row justify-between items-center px-3">
+      <View style={styles.searchContainer}>
         <View style={[styles.shadowProp, styles.searchBar]}>
-          <TextInput placeholder="Search something..." />
-          <Icon name="search1" size={12} />
+          <TextInput
+            placeholder="Search something..."
+            value={search}
+            onChangeText={setSearch}
+            style={styles.searchInput}
+          />
+          {search ? (
+            <TouchableOpacity onPress={() => setSearch("")}>
+              <Icon name="closecircle" size={20} style={styles.icon} />
+            </TouchableOpacity>
+          ) : (
+            <Icon name="search1" size={20} style={styles.icon} />
+          )}
         </View>
 
-        <View className="w-[20%] flex justify-center items-center ">
-          <Icon name="shoppingcart" size={20} />
-        </View>
+        <TouchableOpacity style={styles.cartIcon}>
+          <Icon name="shoppingcart" size={24} />
+        </TouchableOpacity>
       </View>
 
       {/* Category */}
-      <View className="mt-5 flex flex-row justify-between items-center px-3">
-        <Text className="font-bold text-lg">Shop by Category</Text>
-        <Text className="font-normal text-sm text-green-600">View all</Text>
+      <View style={styles.categoryContainer}>
+        <Text style={styles.categoryTitle}>Shop by Category</Text>
+        <TouchableOpacity onPress={() => setSelectedCategory("")}>
+          <Text style={styles.viewAllText}>View all</Text>
+        </TouchableOpacity>
       </View>
 
-      <View className="mt-4 flex flex-row justify-center">
-        <CategoryCart />
-        <CategoryCart />
-        <CategoryCart />
-        <CategoryCart />
+      <View style={styles.categories}>
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Selected category: Điện thoại");
+            setSelectedCategory("65b7ac418a715ba76369ffda");
+          }}
+        >
+          <CategoryCart title="Điện thoại" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Selected category: Laptop");
+            setSelectedCategory("65bf868d26359fc46beaa898");
+          }}
+        >
+          <CategoryCart title="Laptop" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Selected category: Máy tính bảng");
+            setSelectedCategory("65c4bd7f813792e7c8fde3db");
+          }}
+        >
+          <CategoryCart title="Máy tính bảng" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Selected category: Đồng hồ");
+            setSelectedCategory("65c4bd89813792e7c8fde3e0");
+          }}
+        >
+          <CategoryCart title="Đồng hồ" />
+        </TouchableOpacity>
       </View>
 
       {/* Products */}
-      <View className="flex justify-center w-full items-center mt-5">
+      <View style={styles.productContainer}>
         <FlatList
-          data={productTypes}
+          data={products}
           keyExtractor={(item) => item._id}
           numColumns={numColumns}
           contentContainerStyle={styles.flatListContainer}
           columnWrapperStyle={styles.row}
-          renderItem={({ item }) => (
-            <ProductCard item={item} key={item.id} />
-            // <TouchableOpacity
-            //   onPress={() =>
-            //     navigation.navigate("ProductDetail", { productTypeId: item._id })
-            //   }
-            // >
-            //   <View>
-            //     <Text>{item.name}</Text>
-            //     <Text>{item.slug}</Text>
-            //     <Text>{new Date(item.createdAt).toLocaleDateString()}</Text>
-            //   </View>
-            // </TouchableOpacity>
-          )}
+          renderItem={({ item }) => <ProductCard item={item} />}
         />
       </View>
     </View>
@@ -110,17 +141,31 @@ const ProductListScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  container: {
+    backgroundColor: "white",
+    flex: 1,
+    paddingTop: 10,
+  },
+  searchContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 10,
+  },
   searchBar: {
-    height: 40,
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
-    justifyContent: "space-between",
-    borderWidth: 0.2,
-    borderRadius: 2,
+    paddingHorizontal: 10,
+    borderWidth: 0.5,
+    borderRadius: 20,
     width: "80%",
-    borderColor: "#171717",
+    backgroundColor: "#f0f0f0",
+    marginBottom: 10,
   },
   shadowProp: {
     shadowColor: "#171717",
@@ -128,11 +173,49 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 3,
   },
-  row: {
-    justifyContent: 'space-between',
+  searchInput: {
+    flex: 1,
+    paddingVertical: 5,
+  },
+  icon: {
+    marginLeft: 5,
+  },
+  cartIcon: {
+    width: "20%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  categoryContainer: {
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 10,
+  },
+  categoryTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  viewAllText: {
+    fontSize: 14,
+    color: "green",
+  },
+  categories: {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  productContainer: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 10,
   },
   flatListContainer: {
     paddingHorizontal: 5,
+  },
+  row: {
+    justifyContent: "space-between",
   },
 });
 

@@ -1,23 +1,38 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
 
-const CategoryCart = () => {
+const CategoryCart = ({ title, image }) => {
   return (
-    <TouchableOpacity className="flex flex-col items-center py-2 border-[1px] border-green-500 w-20 rounded-md mx-1">
-        <View className="w-10 h-10 rounded-full">
-          <Image
-            source={require("../assets/avatar.jpg")}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-        </View>
+    <View style={styles.card}>
+      <Image source={{ uri: image }} style={styles.image} />
+      <Text style={styles.text}>{title}</Text>
+    </View>
+  );
+};
 
-        <Text className="text-base">Men</Text>
-    </TouchableOpacity>
-  )
-}
+const styles = StyleSheet.create({
+  card: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "green",
+    borderRadius: 8,
+    padding: 10,
+    margin: 5,
+    width: 89,
+    height: 89,
+    backgroundColor: "#fff",
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginBottom: 10,
+  },
+  text: {
+    fontSize: 10,
+    textAlign: "center",
+  },
+});
 
-export default CategoryCart
+export default CategoryCart;
