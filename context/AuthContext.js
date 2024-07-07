@@ -27,11 +27,24 @@ const authReducer = (state, action) => {
 };
 
 const tryLocalSignin = (dispatch) => async () => {
-  const token = await AsyncStorage.getItem("token");
-  if (token) {
-    dispatch({ type: "signin", payload: token });
-    navigateToMain();
-  } else {
+  try {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      dispatch({ type: "loading" });
+      const response = await apiInstance.get("/auth/me");
+
+      dispatch({ type: "signin", payload: token, user: response.data.data });
+      navigateToMain();
+    } else {
+      navigateToAuth();
+    }
+  } catch (error) {
+    console.error(error);
+
+    dispatch({
+      type: "add_error",
+      payload: errorParser(err),
+    });
     navigateToAuth();
   }
 };
