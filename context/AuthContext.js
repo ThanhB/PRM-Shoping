@@ -41,10 +41,13 @@ const tryLocalSignin = (dispatch) => async () => {
   } catch (error) {
     console.error(error);
 
+    await AsyncStorage.removeItem("token");
+
     dispatch({
       type: "add_error",
       payload: errorParser(err),
     });
+    dispatch({ type: "signout" });
     navigateToAuth();
   }
 };
