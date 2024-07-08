@@ -12,7 +12,7 @@ import apiInstance from "../api";
 import Icon from "react-native-vector-icons/AntDesign";
 import CategoryCart from "../components/CategoryCart";
 import ProductCard from "../components/ProductCard";
-import { laptopImg, phoneImg, tabletImg, watchImg } from "../data/CategoryImg";
+import { laptopImg, phoneImg, tabletImg } from "../data/CategoryImg";
 
 const ProductListScreen = ({ navigation }) => {
   const [numColumns, setNumColumns] = useState(2);
@@ -22,25 +22,25 @@ const ProductListScreen = ({ navigation }) => {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  // const fetchProducts = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const url = `/products/public/?limit=10&page=1&order=created%20asc&search=${search}&productType=${selectedCategory}`;
-  //     console.log("API URL:", url);
-  //     const response = await apiInstance.get(url);
-  //     console.log("API Response:", response.data);
-  //     setProducts(response.data.data.products);
-  //   } catch (error) {
-  //     setError("Failed to load products");
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const url = `/products/public/?limit=10&page=1&order=created%20asc&search=${search}&productType=${selectedCategory}`;
+      console.log("API URL:", url);
+      const response = await apiInstance.get(url);
+      console.log("API Response:", response.data);
+      setProducts(response.data.data.products);
+    } catch (error) {
+      setError("Failed to load products");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchProducts();
-  // }, [search, selectedCategory]);
+  useEffect(() => {
+    fetchProducts();
+  }, [search, selectedCategory]);
 
   if (loading) {
     return (
