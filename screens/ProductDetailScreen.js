@@ -12,15 +12,31 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import RenderHtml from "react-native-render-html";
 import apiInstance from "../api";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/CartReducer";
 const { width } = Dimensions.get("window");
 
 const ProductDetailScreen = ({ route }) => {
   const { productTypeId, totalReviews, averageRating } = route.params;
   const [productDetail, setProductDetail] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [addedToCart, setAddedToCart] = useState(false);
   const [error, setError] = useState(null);
-
+  const dispatch = useDispatch();
+  const addItemToCart = () => {
+    const itemData = {
+      id: productDetail._id, // Ensure you have a unique identifier
+      name: productDetail.name,
+      price: productDetail.price,
+      image: productDetail.image,
+    };
+    setAddedToCart(true);
+    dispatch(addToCart(itemData)); // Dispatch the action with the item data
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 60000);
+  };
+  const cartItems = useSelector((state) => state.cart.cart)
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
@@ -113,8 +129,16 @@ const ProductDetailScreen = ({ route }) => {
           {totalReviews !== undefined ? totalReviews : 0} reviews)
         </Text>
       </View>
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.addButtonText}>Add to Cart</Text>
+      <TouchableOpacity style={styles.addButton}
+       onPress={() => addItemToCart(route?.params?.item)}
+       >
+      {addedToCart ? (
+          <View>
+            <Text style={styles.addedToCart}>Added to Cart</Text>
+          </View>
+        ) : (
+          <Text style={styles.addedToCart}>Add to Cart</Text>
+        )}
       </TouchableOpacity>
       <View style={styles.descriptionContainer}>
         <Text style={styles.sectionTitle}>Product Description:</Text>

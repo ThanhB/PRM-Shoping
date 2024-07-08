@@ -8,7 +8,9 @@ import {
 } from "react-native";
 import FeatureCard from "../components/FeatureCard";
 import SaleCard from "../components/SaleCard";
-
+import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { Alert } from 'react-native';
 const HomeScreen = () => {
   const Category = [
     { id: 1, name: "Teddy" },
@@ -22,7 +24,12 @@ const HomeScreen = () => {
     { id: 4, name: "Acessories" },
     { id: 5, name: "Headphone" },
   ];
-
+  const cart = useSelector((state) => state.cart.cart);
+  useEffect(() => {
+    if (cart.length > 0) {
+      Alert.alert('Notification', `You have ${cart.length} item(s) in your bag`);
+    }
+  }, [cart.length]);
   return (
     <ScrollView className=" bg-white py-2">
       {/* Avatar section */}

@@ -72,7 +72,15 @@ function OrderListScreen() {
           <Text className="font-bold">Order № {order._id}</Text>
           <View className="flex flex-row justify-between mt-6">
             <Text>Quantity: {order.orderItems.length}</Text>
-            <Text>Total Amount: {order.totalPrice}</Text>
+            <Text>
+              Total Amount:
+              <Text className=" text-red-500">
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(order.totalPrice)}
+              </Text>
+            </Text>
           </View>
         </View>
         <View>
