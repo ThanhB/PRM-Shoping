@@ -12,34 +12,35 @@ import apiInstance from "../api";
 import Icon from "react-native-vector-icons/AntDesign";
 import CategoryCart from "../components/CategoryCart";
 import ProductCard from "../components/ProductCard";
+import { laptopImg, phoneImg, tabletImg, watchImg } from "../data/CategoryImg";
 
 const ProductListScreen = ({ navigation }) => {
   const [numColumns, setNumColumns] = useState(2);
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const fetchProducts = async () => {
-    setLoading(true);
-    try {
-      const url = `/products/public/?limit=10&page=1&order=created%20asc&search=${search}&productType=${selectedCategory}`;
-      console.log("API URL:", url);
-      const response = await apiInstance.get(url);
-      console.log("API Response:", response.data);
-      setProducts(response.data.data.products);
-    } catch (error) {
-      setError("Failed to load products");
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchProducts = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const url = `/products/public/?limit=10&page=1&order=created%20asc&search=${search}&productType=${selectedCategory}`;
+  //     console.log("API URL:", url);
+  //     const response = await apiInstance.get(url);
+  //     console.log("API Response:", response.data);
+  //     setProducts(response.data.data.products);
+  //   } catch (error) {
+  //     setError("Failed to load products");
+  //     console.error(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchProducts();
-  }, [search, selectedCategory]);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, [search, selectedCategory]);
 
   if (loading) {
     return (
@@ -97,7 +98,7 @@ const ProductListScreen = ({ navigation }) => {
             setSelectedCategory("65b7ac418a715ba76369ffda");
           }}
         >
-          <CategoryCart title="Điện thoại" />
+          <CategoryCart title="Điện thoại" image={phoneImg}/>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -105,7 +106,7 @@ const ProductListScreen = ({ navigation }) => {
             setSelectedCategory("65bf868d26359fc46beaa898");
           }}
         >
-          <CategoryCart title="Laptop" />
+          <CategoryCart title="Laptop"  image={laptopImg} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -113,7 +114,7 @@ const ProductListScreen = ({ navigation }) => {
             setSelectedCategory("65c4bd7f813792e7c8fde3db");
           }}
         >
-          <CategoryCart title="Máy tính bảng" />
+          <CategoryCart title="Máy tính bảng" image={tabletImg}/>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -121,7 +122,7 @@ const ProductListScreen = ({ navigation }) => {
             setSelectedCategory("65c4bd89813792e7c8fde3e0");
           }}
         >
-          <CategoryCart title="Đồng hồ" />
+          <CategoryCart title="Đồng hồ" image={watchImg}/>
         </TouchableOpacity>
       </View>
 
