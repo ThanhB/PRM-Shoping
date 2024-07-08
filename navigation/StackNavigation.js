@@ -42,7 +42,7 @@ const ProductStack = () => {
 const CheckoutStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="shopping" component={CartScreen} />
+      <Stack.Screen name="shopping" component={CartScreen}  options={{ headerShown: false, headerTitle: "" }}/>
     </Stack.Navigator>
   );
 };

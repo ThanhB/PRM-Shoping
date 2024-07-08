@@ -17,45 +17,45 @@ function OrderDetail() {
     const fetchDeliveryInfo = async (deliveryId) => {
       try {
         const response = await apiInstance.get(`/delivery-type/${deliveryId}`);
-        return response.data.data; 
+        return response.data.data;
       } catch (error) {
         console.error(error);
-        return {}; 
+        return {};
       }
     };
-  
+
     async function fetchData() {
-      setIsLoading(true); 
+      setIsLoading(true);
       try {
-      
         const orderDetailPromise = apiInstance.get(`/orders/me/${orderId}`);
-        const paymentInfoPromise = apiInstance.get(`/payment-type/${paymentId}`);
-  
+        const paymentInfoPromise = apiInstance.get(
+          `/payment-type/${paymentId}`
+        );
+
         const [orderDetailResponse, paymentResponse] = await Promise.all([
           orderDetailPromise,
           paymentInfoPromise,
         ]);
-  
+
         const orderDetailData = orderDetailResponse.data.data;
         const paymentData = paymentResponse.data.data;
-  
-       
-        const deliveryData = await fetchDeliveryInfo(orderDetailData.deliveryMethod);
-  
-      
+
+        const deliveryData = await fetchDeliveryInfo(
+          orderDetailData.deliveryMethod
+        );
+
         setOrderDetail(orderDetailData);
         setPayment(paymentData);
         setDelivery(deliveryData);
       } catch (error) {
         console.error("Error fetching data:", error);
-      
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     }
-  
+
     fetchData();
-  }, [orderId, paymentId]); 
+  }, [orderId, paymentId]);
 
   useEffect(() => {
     Animated.loop(
@@ -81,7 +81,15 @@ function OrderDetail() {
       </View>
     );
   }
+  const formattedPrice = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(orderDetail.totalPrice);
 
+  const deliveryFee = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(orderDetail.shippingPrice);
   return (
     <View className="px-2 py-8">
       <View className="flex flex-row justify-between">
@@ -124,7 +132,12 @@ function OrderDetail() {
                 </Text>
                 <View className="flex flex-row justify-between mt-3 ">
                   <Text className="text-sm">Units: {item.amount}</Text>
-                  <Text className="text-sm">{item.price * item.amount}$</Text>
+                  <Text className="text-sm text-red-500">
+                    {new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(item.price * item.amount)}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -140,7 +153,8 @@ function OrderDetail() {
         <View className="flex flex-col mt-2 space-y-2">
           <View>
             <Text className="text-base">
-              Shipping Address: {orderDetail.shippingAddress.address}, {orderDetail.shippingAddress.city.name}
+              Shipping Address: {orderDetail.shippingAddress.address},{" "}
+              {orderDetail.shippingAddress.city.name}
             </Text>
           </View>
           <View>
@@ -150,7 +164,13 @@ function OrderDetail() {
             <Text className="text-base">Delivery method: {delivery.name}</Text>
           </View>
           <View>
-            <Text className="text-base">Total Ammout: {orderDetail.totalPrice}$</Text>
+            <Text className="text-base">Delivery fee: {deliveryFee}</Text>
+          </View>
+          <View>
+            <Text className="text-base">
+              Total Ammout:{" "}
+              <Text className="text-red-500 font-bold">{formattedPrice}</Text>
+            </Text>
           </View>
         </View>
       </View>
