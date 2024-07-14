@@ -12,7 +12,7 @@ import apiInstance from "../api";
 import Icon from "react-native-vector-icons/AntDesign";
 import CategoryCart from "../components/CategoryCart";
 import ProductCard from "../components/ProductCard";
-import { laptopImg, phoneImg, tabletImg } from "../data/CategoryImg";
+import { laptopImg, phoneImg, tabletImg, watchImg } from "../data/CategoryImg";
 
 const ProductListScreen = ({ navigation }) => {
   const [numColumns, setNumColumns] = useState(2);
