@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const apiInstance = axios.create({
-  baseURL: "https://api-shop-l5ir.onrender.com/api",
+  baseURL: "https://api-shop-ic3t.onrender.com",
 });
 
 apiInstance.interceptors.request.use(
