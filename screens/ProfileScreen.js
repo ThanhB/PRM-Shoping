@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Text, View, Animated, Image } from "react-native";
+import { Button, Text, View, Animated, Image, ActivityIndicator } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 import apiInstance from "../api";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -43,9 +43,7 @@ function ProfileScreen() {
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Animated.View style={{ transform: [{ rotate: spin }] }}>
-          <Text>Loading...</Text>
-        </Animated.View>
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
@@ -81,7 +79,7 @@ function ProfileScreen() {
           </Link>
         </View>
         <View class="Account">
-          <Link to={{ screen: "accountDetail",  params: { user: user } }}>
+          <Link to={{ screen: "accountDetail", params: { user: user } }}>
             <View className="bg-white w-full h-[60px] rounded-xl flex flex-row items-center justify-between px-2">
               <Text className="font-bold text-black pl-1 text-base">
                 Account

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
-import { View, Text, Animated, Image } from "react-native";
+import { View, Text, Animated, Image, ActivityIndicator } from "react-native";
 import apiInstance from "../api";
 
 function OrderDetail() {
@@ -75,9 +75,7 @@ function OrderDetail() {
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Animated.View style={{ transform: [{ rotate: spin }] }}>
-          <Text>Loading...</Text>
-        </Animated.View>
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }

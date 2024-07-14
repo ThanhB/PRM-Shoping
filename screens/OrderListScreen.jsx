@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Animated, Button, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Animated,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { useRoute, Link } from "@react-navigation/native";
 import apiInstance from "../api";
 
@@ -49,9 +55,7 @@ function OrderListScreen() {
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Animated.View style={{ transform: [{ rotate: spin }] }}>
-          <Text>Loading...</Text>
-        </Animated.View>
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
