@@ -8,10 +8,16 @@ import {
 } from "react-native";
 import FeatureCard from "../components/FeatureCard";
 import SaleCard from "../components/SaleCard";
-import { useSelector } from 'react-redux';
-import React, { useEffect } from 'react';
-import { Alert } from 'react-native';
+import { useSelector } from "react-redux";
+import React, { useContext, useEffect } from "react";
+import { Alert } from "react-native";
+import { Context as AuthContext } from "../context/AuthContext";
+
 const HomeScreen = () => {
+  const {
+    state: { user },
+  } = useContext(AuthContext);
+
   const Category = [
     { id: 1, name: "Teddy" },
     { id: 2, name: "Car" },
@@ -25,11 +31,16 @@ const HomeScreen = () => {
     { id: 5, name: "Headphone" },
   ];
   const cart = useSelector((state) => state.cart.cart);
+
   useEffect(() => {
     if (cart.length > 0) {
-      Alert.alert('Notification', `You have ${cart.length} item(s) in your bag`);
+      Alert.alert(
+        "Notification",
+        `You have ${cart.length} item(s) in your bag`
+      );
     }
   }, [cart.length]);
+
   return (
     <ScrollView className=" bg-white py-2">
       {/* Avatar section */}
@@ -37,19 +48,13 @@ const HomeScreen = () => {
       <View className="flex px-4 justify-between items-center flex-row flex-1">
         <View className="flex flex-col">
           <Text>Welcome back!</Text>
-          <Text className="text-base font-semibold">
-            Nguyen Huynh Minh Khoi
-          </Text>
+          <Text className="text-base font-semibold">{user.email}</Text>
         </View>
 
-        <View className="w-10 h-10 rounded-full">
+        <View className="w-10 h-10 rounded-full overflow-hidden">
           <Image
-            source={require("../assets/avatar.jpg")}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
+            source={{ uri: user.avatar }}
+            className="w-full h-full object-cover"
           />
         </View>
       </View>
