@@ -45,17 +45,6 @@ const SigninScreen = () => {
             <Text className="text-green-600">Forgot password?</Text>
           </TouchableOpacity>
         </View>
-
-        <View className="flex-row items-center mt-4">
-          <View className="flex-1 border-b border-zinc-300" />
-          <Text className="mx-4 text-zinc-400">OR</Text>
-          <View className="flex-1 border-b border-zinc-300" />
-        </View>
-
-        <TouchableOpacity className="flex-row items-center border border-zinc-300 rounded-lg px-4 py-2 mt-4">
-          <Text className="text-lg">🌐</Text>
-          <Text className="ml-4">Log In with Google</Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );

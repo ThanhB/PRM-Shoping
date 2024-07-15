@@ -1,12 +1,6 @@
 import { Link, useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useContext } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import AuthForm from "../components/AuthForm";
 import { Context as AuthContext } from "../context/AuthContext";
 
@@ -45,28 +39,9 @@ const SignupScreen = () => {
           submitButtonText="Sign Up"
           onSubmit={signup}
         />
-
-        <View className="flex-row items-center mt-4">
-          <View className="flex-1 border-b border-zinc-300" />
-          <Text className="mx-4 text-zinc-400">OR</Text>
-          <View className="flex-1 border-b border-zinc-300" />
-        </View>
-
-        <TouchableOpacity className="flex-row items-center border border-zinc-300 rounded-lg px-4 py-2 mt-4">
-          <Text className="text-lg">🌐</Text>
-          <Text className="ml-4">Log In with Google</Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    marginBottom: 250,
-  },
-});
 
 export default SignupScreen;
