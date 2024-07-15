@@ -1,35 +1,55 @@
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, Image, ScrollView, Text, View } from "react-native";
 import FeatureCard from "../components/FeatureCard";
 import SaleCard from "../components/SaleCard";
 import { useSelector } from "react-redux";
 import React, { useContext, useEffect } from "react";
 import { Alert } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
+import { laptopImg, phoneImg, tabletImg, watchImg } from "../data/CategoryImg";
+
+const Category = [
+  { id: 1, name: "Teddy" },
+  { id: 2, name: "Car" },
+];
+
+const SaleOffData = [
+  {
+    id: 1,
+    name: "Phone",
+    image: phoneImg,
+    categoryId: "65b7ac418a715ba76369ffda",
+  },
+  {
+    id: 2,
+    name: "Table",
+    image: tabletImg,
+    categoryId: "65c4bd7f813792e7c8fde3db",
+  },
+  {
+    id: 3,
+    name: "Watch",
+    image: watchImg,
+    categoryId: "65c4bd89813792e7c8fde3e0",
+  },
+  {
+    id: 4,
+    name: "Acessories",
+    image: laptopImg,
+    categoryId: "65bf868d26359fc46beaa898",
+  },
+  {
+    id: 5,
+    name: "Headphone",
+    image: phoneImg,
+    categoryId: "65b7ac418a715ba76369ffda",
+  },
+];
 
 const HomeScreen = () => {
   const {
     state: { user },
   } = useContext(AuthContext);
 
-  const Category = [
-    { id: 1, name: "Teddy" },
-    { id: 2, name: "Car" },
-  ];
-
-  const SaleOffData = [
-    { id: 1, name: "Phone" },
-    { id: 2, name: "Table" },
-    { id: 3, name: "Watch" },
-    { id: 4, name: "Acessories" },
-    { id: 5, name: "Headphone" },
-  ];
   const cart = useSelector((state) => state.cart.cart);
 
   useEffect(() => {
@@ -81,7 +101,6 @@ const HomeScreen = () => {
       <View
         style={{
           flex: 1,
-          height: 20,
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
@@ -102,13 +121,11 @@ const HomeScreen = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={SaleOffData}
-          renderItem={({ item }) => <SaleCard title={item} />}
+          renderItem={({ item }) => <SaleCard item={item} />}
         />
       </View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default HomeScreen;

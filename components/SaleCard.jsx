@@ -1,39 +1,50 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
+import { Link } from "@react-navigation/native";
 
-const SaleCard = ({title}) => {
+const SaleCard = ({ item }) => {
   return (
-    <View
-      style={{
-        height: 150,
-        width: 150,
-        borderRadius: 10,
-        marginRight: 10,
-        position: "relative",
+    <Link
+      to={{
+        screen: "Products",
+        params: {
+          screen: "ProductList",
+          params: { categoryId: item.categoryId },
+        },
       }}
+      style={{ marginRight: 10 }}
     >
-      <Image
-        source={require("../assets/feature-img-1.jpg")}
-        className="w-full h-full object-cover rounded-[10px]"
-      />
       <View
         style={{
-          position: "absolute",
-          width: "100%",
-          bottom: 0,
-          height: 40,
-          backgroundColor: "rgba(0,0,0,0.7)",
-          borderBottomLeftRadius: 10,
-          borderBottomRightRadius: 10,
-          display: "flex",
-          justifyContent: 'center',
-          alignItems: 'center'
+          height: 150,
+          width: 150,
+          borderRadius: 10,
+          marginRight: 10,
+          position: "relative",
         }}
       >
-        <Text style={{color: 'white', fontSize: 16}}>{title.name}</Text>
-
+        <Image
+          source={{ uri: item.image }}
+          className="w-full h-full object-cover rounded-[10px]"
+        />
+        <View
+          style={{
+            position: "absolute",
+            width: "100%",
+            bottom: 0,
+            height: 40,
+            backgroundColor: "rgba(0,0,0,0.7)",
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 16 }}>{item.name}</Text>
+        </View>
       </View>
-    </View>
+    </Link>
   );
 };
 

@@ -14,13 +14,15 @@ import CategoryCart from "../components/CategoryCart";
 import ProductCard from "../components/ProductCard";
 import { laptopImg, phoneImg, tabletImg, watchImg } from "../data/CategoryImg";
 
-const ProductListScreen = ({ navigation }) => {
+const ProductListScreen = ({ route }) => {
   const [numColumns, setNumColumns] = useState(2);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(
+    route.params?.categoryId || ""
+  );
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -98,7 +100,7 @@ const ProductListScreen = ({ navigation }) => {
             setSelectedCategory("65b7ac418a715ba76369ffda");
           }}
         >
-          <CategoryCart title="Điện thoại" image={phoneImg}/>
+          <CategoryCart title="Điện thoại" image={phoneImg} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -106,7 +108,7 @@ const ProductListScreen = ({ navigation }) => {
             setSelectedCategory("65bf868d26359fc46beaa898");
           }}
         >
-          <CategoryCart title="Laptop"  image={laptopImg} />
+          <CategoryCart title="Laptop" image={laptopImg} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -114,7 +116,7 @@ const ProductListScreen = ({ navigation }) => {
             setSelectedCategory("65c4bd7f813792e7c8fde3db");
           }}
         >
-          <CategoryCart title="Máy tính bảng" image={tabletImg}/>
+          <CategoryCart title="Máy tính bảng" image={tabletImg} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -122,7 +124,7 @@ const ProductListScreen = ({ navigation }) => {
             setSelectedCategory("65c4bd89813792e7c8fde3e0");
           }}
         >
-          <CategoryCart title="Đồng hồ" image={watchImg}/>
+          <CategoryCart title="Đồng hồ" image={watchImg} />
         </TouchableOpacity>
       </View>
 
