@@ -24,7 +24,10 @@ apiInstance.interceptors.response.use(
     return response;
   },
   async (err) => {
-    if (err.response.status === 401) {
+    if (axios.isCancel(err)) {
+      console.log("Request canceled", err.message);
+    }
+    if (err.response?.status === 401) {
       await AsyncStorage.removeItem("token");
       navigateToAuth();
     }
@@ -33,4 +36,3 @@ apiInstance.interceptors.response.use(
 );
 
 export default apiInstance;
-

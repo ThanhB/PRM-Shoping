@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-const CategoryCart = ({ title, image }) => {
+const CategoryCart = ({ title, image, selected }) => {
   return (
-    <View style={styles.card}>
+    <View style={styles.card(selected)}>
       <Image source={{ uri: image }} style={styles.image} />
       <Text style={styles.text}>{title}</Text>
     </View>
@@ -11,7 +11,7 @@ const CategoryCart = ({ title, image }) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
+  card: (selected) => ({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     margin: 5,
     width: 89,
     height: 89,
-    backgroundColor: "#fff",
-  },
+    backgroundColor: selected ? "green" : "white",
+  }),
   image: {
     width: 50,
     height: 50,
