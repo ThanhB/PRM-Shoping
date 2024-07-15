@@ -9,12 +9,13 @@ import AuthNavigation from "./navigation/AuthNavigation";
 import { createStackNavigator } from "@react-navigation/stack";
 import "./styles.css";
 import store from "./store";
+
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <Provider store={store}>
-    <AuthProvider>
+      <AuthProvider>
         <SafeAreaProvider>
           <NavigationContainer ref={navigationRef}>
             <Stack.Navigator>
@@ -41,7 +42,7 @@ export default function App() {
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>
-    </AuthProvider>
+      </AuthProvider>
     </Provider>
   );
 }

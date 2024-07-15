@@ -4,20 +4,20 @@ import { View, Text } from "react-native";
 function AccountDetail({ route }) {
   const { user } = route.params;
 
-  const getFullName = () => {
-    return `${user.lastName} ${user.middleName} ${user.firstName}`;
+  const getFullName = (u) => {
+    if (u.firstName && u.lastName && u.middleName)
+      return `${u.lastName} ${u.middleName} ${u.firstName}`;
+
+    return u.email.split("@")[0];
   };
 
-  const fullName = getFullName(user);
-  console.log("phone:", user.phoneNumber);
   return (
     <View className="py-4 px-3">
       <Text className="font-bold text-black text-2xl">Account Infomation</Text>
       <View className="mt-10 px-2 space-y-9">
-
         <View className="space-y-2">
           <Text className="font-bold text-black text-xl">User name</Text>
-          <Text className="text-black">Name: {fullName}</Text>
+          <Text className="text-black">Name: {getFullName(user)}</Text>
         </View>
 
         <View className="space-y-2">
@@ -27,7 +27,9 @@ function AccountDetail({ route }) {
 
         <View className="space-y-2">
           <Text className="font-bold text-black text-xl">Phone number</Text>
-          <Text className="text-black">{user.phoneNumber ? user.phoneNumber : "N/A"}</Text>
+          <Text className="text-black">
+            {user.phoneNumber ? user.phoneNumber : "N/A"}
+          </Text>
         </View>
 
         <View className="space-y-2">

@@ -54,7 +54,7 @@ const HomeScreen = () => {
         <View className="w-10 h-10 rounded-full overflow-hidden">
           <Image
             source={{ uri: user.avatar }}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover bg-gray-300"
           />
         </View>
       </View>
