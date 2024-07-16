@@ -42,7 +42,7 @@ export default function App() {
               />
             </Stack.Navigator>
           </NavigationContainer>
-          <Toast ref={(ref) => Toast.setRef(ref)} />
+          <Toast />
         </SafeAreaProvider>
       </AuthProvider>
     </Provider>
