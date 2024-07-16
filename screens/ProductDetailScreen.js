@@ -14,6 +14,8 @@ import RenderHtml from "react-native-render-html";
 import apiInstance from "../api";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/CartReducer";
+import Toast from "react-native-toast-message";
+
 const { width } = Dimensions.get("window");
 
 const ProductDetailScreen = ({ route }) => {
@@ -23,20 +25,37 @@ const ProductDetailScreen = ({ route }) => {
   const [addedToCart, setAddedToCart] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
+
   const addItemToCart = () => {
-    const itemData = {
-      id: productDetail._id, // Ensure you have a unique identifier
-      name: productDetail.name,
-      price: productDetail.price,
-      image: productDetail.image,
-    };
-    setAddedToCart(true);
-    dispatch(addToCart(itemData)); // Dispatch the action with the item data
-    setTimeout(() => {
-      setAddedToCart(false);
-    }, 60000);
+    if (productDetail.countInStock > 0) {
+      const itemData = {
+        id: productDetail._id,
+        name: productDetail.name,
+        price: productDetail.price,
+        image: productDetail.image,
+        countInStock: productDetail.countInStock,
+      };
+      setAddedToCart(true);
+      dispatch(addToCart(itemData));
+      Toast.show({
+        type: "success",
+        text1: "Added to Cart",
+        text2: `${productDetail.name} has been added to your cart.`,
+      });
+      setTimeout(() => {
+        setAddedToCart(false);
+      }, 60000);
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Out of Stock",
+        text2: "Sorry, this item is currently out of stock.",
+      });
+    }
   };
-  const cartItems = useSelector((state) => state.cart.cart)
+
+  const cartItems = useSelector((state) => state.cart.cart);
+
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
@@ -129,10 +148,8 @@ const ProductDetailScreen = ({ route }) => {
           {totalReviews !== undefined ? totalReviews : 0} reviews)
         </Text>
       </View>
-      <TouchableOpacity style={styles.addButton}
-       onPress={() => addItemToCart(route?.params?.item)}
-       >
-      {addedToCart ? (
+      <TouchableOpacity style={styles.addButton} onPress={addItemToCart}>
+        {addedToCart ? (
           <View>
             <Text style={styles.addedToCart}>Added to Cart</Text>
           </View>
@@ -148,6 +165,7 @@ const ProductDetailScreen = ({ route }) => {
           tagsStyles={htmlStyles}
         />
       </View>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </ScrollView>
   );
 };

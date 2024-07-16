@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { Provider as AuthProvider } from "./context/AuthContext";
 import AuthNavigation from "./navigation/AuthNavigation";
 import { createStackNavigator } from "@react-navigation/stack";
+import Toast from "react-native-toast-message";
 import "./styles.css";
 import store from "./store";
 
@@ -41,6 +42,7 @@ export default function App() {
               />
             </Stack.Navigator>
           </NavigationContainer>
+          <Toast ref={(ref) => Toast.setRef(ref)} />
         </SafeAreaProvider>
       </AuthProvider>
     </Provider>

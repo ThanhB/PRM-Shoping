@@ -11,7 +11,11 @@ export const CartSlice = createSlice({
         (item) => item.id === action.payload.id
       );
       if (itemPresent) {
-        itemPresent.quantity++;
+        if (itemPresent.quantity < action.payload.countInStock) {
+          itemPresent.quantity++;
+        } else {
+          console.warn("No more stock available for this item");
+        }
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }
@@ -22,18 +26,21 @@ export const CartSlice = createSlice({
       );
       state.cart = removeItem;
     },
-    incementQuantity: (state, action) => {
+    incrementQuantity: (state, action) => {
       const itemPresent = state.cart.find(
         (item) => item.id === action.payload.id
       );
-      itemPresent.quantity++;
+      if (itemPresent.quantity < action.payload.countInStock) {
+        itemPresent.quantity++;
+      } else {
+        console.warn("No more stock available for this item");
+      }
     },
     decrementQuantity: (state, action) => {
       const itemPresent = state.cart.find(
         (item) => item.id === action.payload.id
       );
       if (itemPresent.quantity === 1) {
-        itemPresent.quantity = 0;
         const removeItem = state.cart.filter(
           (item) => item.id !== action.payload.id
         );
@@ -42,13 +49,18 @@ export const CartSlice = createSlice({
         itemPresent.quantity--;
       }
     },
-    cleanCart:(state) => {
-        state.cart = [];
-    }
+    cleanCart: (state) => {
+      state.cart = [];
+    },
   },
 });
 
+export const {
+  addToCart,
+  removeFromCart,
+  incrementQuantity,
+  decrementQuantity,
+  cleanCart,
+} = CartSlice.actions;
 
-export const {addToCart,removeFromCart,incementQuantity,decrementQuantity,cleanCart} = CartSlice.actions;
-
-export default CartSlice.reducer
+export default CartSlice.reducer;
