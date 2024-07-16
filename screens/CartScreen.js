@@ -180,7 +180,7 @@ const CartScreen = () => {
           }}
         />
         <Pressable
-          onPress={() => navigation.navigate("Confirm")}
+          onPress={() => navigation.navigate("checkout")}
           style={{
             backgroundColor: "#FFC72C",
             padding: 10,
