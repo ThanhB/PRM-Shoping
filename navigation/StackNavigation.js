@@ -9,6 +9,8 @@ import AccountDetail from "../screens/AccountDetail";
 import OrderDetail from "../screens/OderDetail";
 import ProductDetailScreen from "../screens/ProductDetailScreen";
 import ProductListScreen from "../screens/ProductListScreen";
+import CheckoutScreen from "../screens/CheckoutScreen";
+import SuccessScreen from "../screens/SuccessScreen";
 
 const Stack = createStackNavigator();
 
@@ -43,6 +45,8 @@ const CheckoutStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="shopping" component={CartScreen}  options={{ headerShown: false, headerTitle: "" }}/>
+      <Stack.Screen name="checkout" component={CheckoutScreen}  options={{ headerShown: true, headerTitle: "Checking out" }}/>
+      <Stack.Screen name="success" component={SuccessScreen}  options={{ headerShown: false, headerTitle: "" }}/>
     </Stack.Navigator>
   );
 };
