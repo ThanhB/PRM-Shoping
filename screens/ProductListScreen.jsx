@@ -52,11 +52,11 @@ const ProductListScreen = ({ route }) => {
 
     try {
       const url = `/products/public/?limit=10&page=1&order=created%20asc&search=${search}&productType=${selectedCategory}`;
-      console.log("API URL:", url);
+      // console.log("API URL:", url);
       const response = await apiInstance.get(url, {
         signal,
       });
-      console.log("API Response:", response.data);
+      // console.log("API Response:", response.data);
       setProducts([...response.data.data.products]);
     } catch (error) {
       // console.error(error);
@@ -109,7 +109,6 @@ const ProductListScreen = ({ route }) => {
       <View style={styles.categories}>
         <TouchableOpacity
           onPress={() => {
-            console.log("Selected category: Điện thoại");
             handleSelectCategory("65b7ac418a715ba76369ffda");
           }}
         >
@@ -121,7 +120,6 @@ const ProductListScreen = ({ route }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            console.log("Selected category: Laptop");
             handleSelectCategory("65bf868d26359fc46beaa898");
           }}
         >
@@ -133,7 +131,6 @@ const ProductListScreen = ({ route }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            console.log("Selected category: Máy tính bảng");
             handleSelectCategory("65c4bd7f813792e7c8fde3db");
           }}
         >
@@ -145,7 +142,6 @@ const ProductListScreen = ({ route }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            console.log("Selected category: Đồng hồ");
             handleSelectCategory("65c4bd89813792e7c8fde3e0");
           }}
         >

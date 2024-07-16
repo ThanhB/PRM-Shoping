@@ -16,11 +16,11 @@ const CheckAuthWrapper = ({ children }) => {
   }, [user, token]);
 
   if (!user && !token) {
-    console.log("User is not authenticated");
+    // console.log("User is not authenticated");
     return null;
   }
 
-  console.log("User is authenticated");
+  // console.log("User is authenticated");
 
   return <>{children}</>;
 };

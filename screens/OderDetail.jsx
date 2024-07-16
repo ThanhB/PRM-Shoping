@@ -97,7 +97,7 @@ function OrderDetail() {
         </Text>
       </View>
       <View className="flex flex-row justify-between pt-2">
-        <Text>Customer: {orderDetail.shippingAddress.fullName}</Text>
+        <Text>Customer: {orderDetail.shippingAddress?.fullName || "Unknown"}</Text>
         <Text className="">
           {orderDetail.isDelivered === 0 ? (
             <Text className="text-red-500">Not Delivered</Text>
@@ -107,12 +107,12 @@ function OrderDetail() {
         </Text>
       </View>
       <View className="mt-2">
-        <Text>{orderDetail.orderItems.length} items</Text>
+        <Text>{orderDetail.orderItems?.length} items</Text>
       </View>
 
       {/* Product card */}
       <View>
-        {orderDetail.orderItems.map((item, index) => (
+        {orderDetail.orderItems?.map((item, index) => (
           <View
             key={index}
             className="my-2 py-1 border border-gray-300 bg-white h-[110px] rounded-lg shadow-md"
@@ -151,8 +151,8 @@ function OrderDetail() {
         <View className="flex flex-col mt-2 space-y-2">
           <View>
             <Text className="text-base">
-              Shipping Address: {orderDetail.shippingAddress.address},{" "}
-              {orderDetail.shippingAddress.city.name}
+              Shipping Address: {orderDetail.shippingAddress?.address},{" "}
+              {orderDetail.shippingAddress?.city.name}
             </Text>
           </View>
           <View>

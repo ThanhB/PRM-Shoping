@@ -69,7 +69,7 @@ const CheckoutScreen = () => {
     setIsLoading(true);
     const orderItems = cart.map((item) => ({
       name: item.name,
-      quantity: item.quantity,
+      amount: item.quantity,
       image: item.image,
       price: item.price,
       discount: item.discount || 0,
@@ -90,7 +90,6 @@ const CheckoutScreen = () => {
       shippingAddress,
     };
 
-    console.error("Order data", orderData);
     try {
       const response = await apiInstance.post("/orders", orderData);
       setIsLoading(false);
@@ -102,7 +101,6 @@ const CheckoutScreen = () => {
     } catch (error) {
       setIsLoading(false);
       Alert.alert("Error", "Failed to create order");
-      console.error("Error creating order:", error);
     }
   };
 
