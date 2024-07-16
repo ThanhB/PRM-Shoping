@@ -6,10 +6,12 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import { Link } from "@react-navigation/native";
+import { useRoute, Link } from "@react-navigation/native";
 import apiInstance from "../api";
 
 function OrderListScreen() {
+  const route = useRoute();
+  const userId = route.params?.userId;
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState([]);
   const spinValue = new Animated.Value(0);
@@ -28,7 +30,7 @@ function OrderListScreen() {
     setIsLoading(true);
     try {
       const response = await apiInstance.get(
-        "/orders/me?limit=10&page=1&order=created%20asc"
+        `/orders?limit=10&page=1&order=created%20asc&userId=${userId}`
       );
       const fetchedOrders = response.data.data ? response.data.data : [];
       setOrders(fetchedOrders);
