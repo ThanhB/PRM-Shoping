@@ -70,7 +70,7 @@ const CheckoutScreen = () => {
     const orderItems = cart.map((item) => ({
       name: item.name,
       amount: item.quantity,
-      image: item.image,
+      image: "https://via.placeholder.com/150",
       price: item.price,
       discount: item.discount || 0,
       product: item.id,
@@ -83,11 +83,12 @@ const CheckoutScreen = () => {
       shippingPrice: 0,
       totalPrice: calculateTotal(cart),
       fullName: shippingAddress.fullName,
-      city: shippingAddress.city,
+      city: "65b3cdc398e3f7edd6683b21",
       address: shippingAddress.address,
       phone: shippingAddress.phone,
       user: user._id,
       shippingAddress,
+      deliveryMethod:"65b5277c08505e9090100cd5"
     };
 
     try {
